@@ -73,7 +73,6 @@ from tensorflow_estimator.python.estimator import util as estimator_util
 from tensorflow_estimator.python.estimator.export import export_lib
 from tensorflow_estimator.python.estimator.mode_keys import ModeKeys
 
-
 _VALID_MODEL_FN_ARGS = set(
     ['features', 'labels', 'mode', 'params', 'self', 'config'])
 _estimator_api_gauge = monitoring.BoolGauge('/tensorflow/api/estimator',
@@ -826,10 +825,9 @@ class Estimator(object):
           raise ValueError("Couldn't find trained model at {}.".format(
               self._model_dir))
 
-      final_export_dir = export_helpers.get_timestamped_export_dir(export_dir_base)
+      final_export_dir = export_lib.get_timestamped_export_dir(export_dir_base)
       if gfile.NeedsTempLocation(final_export_dir):
-        current_export_dir = 
-          export_helpers.get_temp_export_dir(final_export_dir)
+        current_export_dir = export_lib.get_temp_export_dir(final_export_dir)
       else:
         current_export_dir = final_export_dir
       builder = saved_model_builder.SavedModelBuilder(current_export_dir)
